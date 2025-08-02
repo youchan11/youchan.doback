@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>도박 시뮬레이터</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    #log { margin-top: 20px; white-space: pre-line; }
+  </style>
+</head>
+<body>
+  <h1>도박 시뮬레이터</h1>
+  <p>현재 돈: <span id="money">1000</span>원</p>
+  <input type="number" id="bet" placeholder="배팅 금액 입력">
+  <button onclick="gamble()">도박하기</button>
+  <div id="log"></div>
+
+  <script>
+    let money = 1000;
+
+    function gamble() {
+      const bet = parseInt(document.getElementById('bet').value);
+      if (isNaN(bet) || bet <= 0 || bet > money) {
+        alert("올바른 배팅 금액을 입력하세요.");
+        return;
+      }
+
+      const success = Math.random() < 0.5;
+      if (success) {
+        money += bet;
+        log(`성공! 도박하고 남은 돈: ${money - bet}원, 도박으로 얻은 돈: ${money}원`);
+      } else {
+        money -= bet;
+        log(`실패! 남은 돈: ${money}원, 잃은 돈: ${bet}원`);
+      }
+
+      document.getElementById('money').innerText = money;
+    }
+
+    function log(text) {
+      const logDiv = document.getElementById('log');
+      logDiv.innerText = text + "\n" + logDiv.innerText;
+    }
+  </script>
+</body>
+</html>
